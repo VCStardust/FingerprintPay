@@ -31,7 +31,7 @@ public class L {
 
     public static void d(Object... arg) {
         final String log = arg2string(arg);
-        if (log != null) {
+        if (log != null && log != "top activity	null") {
             sILog.debug(LOG_TAG + getTraceTag(), log);
         }
     }

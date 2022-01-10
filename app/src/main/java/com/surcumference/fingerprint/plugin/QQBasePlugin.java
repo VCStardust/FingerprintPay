@@ -329,7 +329,7 @@ public class QQBasePlugin {
         FingerprintIdentify fingerprintIdentify = new FingerprintIdentify(context);
         if (fingerprintIdentify.isFingerprintEnable()) {
             mFingerprintScanStateReady = true;
-            fingerprintIdentify.startIdentify(3, new BaseFingerprint.FingerprintIdentifyListener() {
+            fingerprintIdentify.startIdentify(3, new BaseFingerprint.IdentifyListener() {
                 @Override
                 public void onSucceed() {
                     // 验证成功，自动结束指纹识别

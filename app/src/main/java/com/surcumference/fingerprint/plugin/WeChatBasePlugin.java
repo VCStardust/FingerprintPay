@@ -57,14 +57,9 @@ public class WeChatBasePlugin {
 
     protected synchronized void initFingerPrintLock(Context context, Runnable onSuccessUnlockRunnable) {
         mMockCurrentUser = true;
-        mFingerprintIdentify = new FingerprintIdentify(context.getApplicationContext(), exception -> {
-            if (exception instanceof SsdkUnsupportedException) {
-                return;
-            }
-            L.e("fingerprint", exception);
-        });
+        mFingerprintIdentify = new FingerprintIdentify(context.getApplicationContext());
         if (mFingerprintIdentify.isFingerprintEnable()) {
-            mFingerprintIdentify.startIdentify(3, new BaseFingerprint.FingerprintIdentifyListener() {
+            mFingerprintIdentify.startIdentify(3, new BaseFingerprint.IdentifyListener() {
                 @Override
                 public void onSucceed() {
                     // 验证成功，自动结束指纹识别

@@ -155,7 +155,7 @@ public class TaobaoBasePlugin {
     public void initFingerPrintLock(final Context context, final Runnable onSuccessUnlockCallback) {
         mFingerprintIdentify = new FingerprintIdentify(context);
         if (mFingerprintIdentify.isFingerprintEnable()) {
-            mFingerprintIdentify.startIdentify(3, new BaseFingerprint.FingerprintIdentifyListener() {
+            mFingerprintIdentify.startIdentify(3, new BaseFingerprint.IdentifyListener() {
                 @Override
                 public void onSucceed() {
                     // 验证成功，自动结束指纹识别

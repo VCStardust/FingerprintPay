@@ -9,8 +9,9 @@ import android.os.SystemClock;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.ButtonBarLayout;
-import androidx.appcompat.widget.ListViewCompat;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.widget.ListViewCompat;
+
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -224,8 +225,6 @@ public class ViewUtils {
             return AppCompatImageView.class.getName();
         } else if (view instanceof ImageView) {
             return ImageView.class.getName();
-        } else if (view instanceof ListViewCompat) {
-            return ListViewCompat.class.getName();
         } else if (view instanceof ListView) {
             return ListView.class.getName();
         } else if (view instanceof GridView) {

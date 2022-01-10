@@ -327,6 +327,7 @@ public class QQBasePlugin {
         cancelFingerprintIdentify();
         mMockCurrentUser = true;
         FingerprintIdentify fingerprintIdentify = new FingerprintIdentify(context);
+        fingerprintIdentify.init();
         if (fingerprintIdentify.isFingerprintEnable()) {
             mFingerprintScanStateReady = true;
             fingerprintIdentify.startIdentify(3, new BaseFingerprint.IdentifyListener() {

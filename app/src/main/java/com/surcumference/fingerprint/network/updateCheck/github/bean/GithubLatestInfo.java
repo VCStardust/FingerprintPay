@@ -1,6 +1,6 @@
 package com.surcumference.fingerprint.network.updateCheck.github.bean;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;

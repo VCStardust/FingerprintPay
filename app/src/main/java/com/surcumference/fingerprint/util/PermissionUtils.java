@@ -1,12 +1,12 @@
 package com.surcumference.fingerprint.util;
 
-import static android.support.v4.content.PermissionChecker.checkSelfPermission;
+import static androidx.core.content.PermissionChecker.checkSelfPermission;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Process;
-import android.support.v4.app.AppOpsManagerCompat;
+import androidx.core.app.AppOpsManagerCompat;
 
 /**
  * Created by Jason on 2017/11/12.

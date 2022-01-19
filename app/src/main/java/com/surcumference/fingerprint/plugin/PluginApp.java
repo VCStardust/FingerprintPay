@@ -1,5 +1,7 @@
 package com.surcumference.fingerprint.plugin;
 
+import android.os.Build;
+
 import com.surcumference.fingerprint.bean.PluginTarget;
 import com.surcumference.fingerprint.bean.PluginType;
 
@@ -15,6 +17,17 @@ public class PluginApp {
     public static void setup(PluginType pluginType, PluginTarget pluginTarget) {
         sPluginType = pluginType;
         sPluginTarget = pluginTarget;
+    }
+
+    public static void setup(String pluginTypeName, PluginTarget pluginTarget) {
+        for (PluginType pluginType: PluginType.values()) {
+            if (pluginType.name().equalsIgnoreCase(pluginTypeName)) {
+                sPluginType = pluginType;
+                sPluginTarget = pluginTarget;
+                return;
+            }
+        }
+        throw new RuntimeException("Unsupported plugin type:" + pluginTypeName);
     }
 
     public static PluginType getCurrentType() {
@@ -34,7 +47,8 @@ public class PluginApp {
     public static<T> T runActionBaseOnCurrentPluginType(Map<PluginType, Callable<T>> actionMap) {
         PluginType pluginType = PluginApp.getCurrentType();
         switch (pluginType) {
-            case Magisk:
+            case Riru:
+            case Zygisk:
             case Xposed:
                 if (!actionMap.containsKey(pluginType)) {
                     throw new IllegalArgumentException("Plugin type:" + pluginType.name() + " is not in actionMap");
@@ -44,7 +58,8 @@ public class PluginApp {
                 throw new RuntimeException("Unsupported plugin type:" + pluginType.name());
         }
         switch (pluginType) {
-            case Magisk:
+            case Riru:
+            case Zygisk:
             case Xposed:
                 try {
                     return actionMap.get(pluginType).call();

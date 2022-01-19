@@ -1,5 +1,7 @@
 package com.surcumference.fingerprint.plugin;
 
+import static com.surcumference.fingerprint.Constant.PACKAGE_NAME_WECHAT;
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -54,6 +56,16 @@ public class WeChatBasePlugin {
     private WeakHashMap<View, View.OnAttachStateChangeListener> mView2OnAttachStateChangeListenerMap = new WeakHashMap<>();
     protected boolean mMockCurrentUser = false;
     protected FingerprintIdentify mFingerprintIdentify;
+
+    private int mWeChatVersionCode = 0;
+
+    private int getWeChatVersionCode(Context context) {
+        if (mWeChatVersionCode != 0) {
+            return mWeChatVersionCode;
+        }
+        mWeChatVersionCode = ApplicationUtils.getPackageVersionCode(context, PACKAGE_NAME_WECHAT);
+        return mWeChatVersionCode;
+    }
 
     protected synchronized void initFingerPrintLock(Context context, Runnable onSuccessUnlockRunnable) {
         mMockCurrentUser = true;
@@ -135,7 +147,8 @@ public class WeChatBasePlugin {
         L.d("Activity onResume =", activity);
         final String activityClzName = activity.getClass().getName();
         if (activityClzName.contains("com.tencent.mm.plugin.setting.ui.setting.SettingsUI")
-                || activityClzName.contains("com.tencent.mm.plugin.wallet.pwd.ui.WalletPasswordSettingUI")) {
+                || activityClzName.contains("com.tencent.mm.plugin.wallet.pwd.ui.WalletPasswordSettingUI")
+                || activityClzName.contains("com.tencent.mm.ui.vas.VASCommonActivity") /** 8.0.18 */) {
             Task.onMain(100, () -> doSettingsMenuInject(activity));
         } else if (activityClzName.contains(".WalletPayUI")
                 || activityClzName.contains(".UIPageFragmentActivity")) {
@@ -257,7 +270,14 @@ public class WeChatBasePlugin {
                         Toast.makeText(context, Lang.getString(R.id.toast_password_not_set_wechat), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    mInputEditText.setText(pwd);
+                    if (getWeChatVersionCode(context) >= 2060) { //8.0.18
+                        mInputEditText.getText().clear();
+                        for (char c : pwd.toCharArray()) {
+                            mInputEditText.append(String.valueOf(c));
+                        }
+                    } else {
+                        mInputEditText.setText(pwd);
+                    }
                 });
                 if (titleTextView != null) {
                     titleTextView.setText(Lang.getString(R.id.wechat_payview_fingerprint_title));
@@ -325,11 +345,20 @@ public class WeChatBasePlugin {
     }
 
     protected void doSettingsMenuInject(final Activity activity) {
-        int versionCode = ApplicationUtils.getPackageVersionCode(activity, Constant.PACKAGE_NAME_WECHAT);
+        int versionCode = getWeChatVersionCode(activity);
         ListView itemView = (ListView) ViewUtils.findViewByName(activity, "android", "list");
         if (ViewUtils.findViewByText(itemView, Lang.getString(R.id.app_settings_name)) != null
                 || isHeaderViewExistsFallback(itemView)) {
             return;
+        }
+        if (versionCode >= 2060) { //8.0.18
+            //整个设置界面的class 都是 com.tencent.mm.ui.vas.VASCommonActivity...
+            if (activity.getClass().getName().contains("com.tencent.mm.ui.vas.VASCommonActivity")) {
+                if (ViewUtils.findViewByText(itemView, Lang.getString(R.id.wechat_general),
+                        "通用", "一般", "General") == null) {
+                    return;
+                }
+            }
         }
 
         boolean isDarkMode = StyleUtils.isDarkMode(activity);
@@ -349,10 +378,15 @@ public class WeChatBasePlugin {
         itemHlinearLayout.setOrientation(LinearLayout.HORIZONTAL);
         itemHlinearLayout.setWeightSum(1);
 
-        itemHlinearLayout.setBackground(new XDrawable.Builder()
+        Drawable backgroundDrawable=new XDrawable.Builder()
                 .defaultColor(isDarkMode ? 0xFF191919 : Color.WHITE)
                 .pressedColor(isDarkMode ? 0xFF1D1D1D : 0xFFE5E5E5)
-                .create());
+                .create();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            itemHlinearLayout.setBackground(backgroundDrawable);
+        }else {
+            itemHlinearLayout.setBackgroundDrawable(backgroundDrawable);
+        }
         itemHlinearLayout.setGravity(Gravity.CENTER_VERTICAL);
         itemHlinearLayout.setClickable(true);
         itemHlinearLayout.setOnClickListener(view -> new SettingsView(activity).showInDialog());
@@ -394,7 +428,11 @@ public class WeChatBasePlugin {
                     if (background != null) {
                         Drawable.ConstantState constantState = background.getConstantState();
                         if (constantState != null) {
-                            itemHlinearLayout.setBackground(constantState.newDrawable());
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                itemHlinearLayout.setBackground(constantState.newDrawable());
+                            }else {
+                                itemHlinearLayout.setBackgroundDrawable(constantState.newDrawable());
+                            }
                         }
                     }
                 }

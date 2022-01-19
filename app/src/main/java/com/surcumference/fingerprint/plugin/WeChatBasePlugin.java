@@ -382,10 +382,15 @@ public class WeChatBasePlugin {
         itemHlinearLayout.setOrientation(LinearLayout.HORIZONTAL);
         itemHlinearLayout.setWeightSum(1);
 
-        itemHlinearLayout.setBackground(new XDrawable.Builder()
+        Drawable backgroundDrawable=new XDrawable.Builder()
                 .defaultColor(isDarkMode ? 0xFF191919 : Color.WHITE)
                 .pressedColor(isDarkMode ? 0xFF1D1D1D : 0xFFE5E5E5)
-                .create());
+                .create();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            itemHlinearLayout.setBackground(backgroundDrawable);
+        }else {
+            itemHlinearLayout.setBackgroundDrawable(backgroundDrawable);
+        }
         itemHlinearLayout.setGravity(Gravity.CENTER_VERTICAL);
         itemHlinearLayout.setClickable(true);
         itemHlinearLayout.setOnClickListener(view -> new SettingsView(activity).showInDialog());
@@ -427,7 +432,11 @@ public class WeChatBasePlugin {
                     if (background != null) {
                         Drawable.ConstantState constantState = background.getConstantState();
                         if (constantState != null) {
-                            itemHlinearLayout.setBackground(constantState.newDrawable());
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                itemHlinearLayout.setBackground(constantState.newDrawable());
+                            }else {
+                                itemHlinearLayout.setBackgroundDrawable(constantState.newDrawable());
+                            }
                         }
                     }
                 }

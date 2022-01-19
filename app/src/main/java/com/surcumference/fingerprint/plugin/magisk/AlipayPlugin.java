@@ -22,14 +22,27 @@ import com.surcumference.fingerprint.util.log.L;
  */
 public class AlipayPlugin extends AlipayBasePlugin {
 
+    /**
+     * >= 4.2.0
+     */
     @Keep
-    public static void main(String appDataDir) {
+    public static void main(String niceName, String pluginTypeName) {
         L.d("Xposed plugin init version: " + BuildConfig.VERSION_NAME);
+        PluginApp.setup(pluginTypeName, PluginTarget.Alipay);
         Task.onApplicationReady(AlipayPlugin::init);
     }
 
+    /**
+     * <= 4.0.1
+     * Note: 可能会导致降级后还显示上一个版本
+     */
+    @Keep
+    @Deprecated
+    public static void main(String niceName) {
+        main(niceName, PluginType.Riru.name());
+    }
+
     public static void init() {
-        PluginApp.setup(PluginType.Magisk, PluginTarget.Alipay);
         Application application = ApplicationUtils.getApplication();
         AlipayPlugin plugin = new AlipayPlugin();
         Task.onMain(1000, ()-> Umeng.init(application));

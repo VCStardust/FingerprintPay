@@ -1,10 +1,10 @@
 
 
-![1](https://github.com/eritpchy/FingerprintPay/raw/main/app/src/main/res/mipmap-xhdpi/ic_launcher.png)
+![1](./app/src/main/res/mipmap-xhdpi/ic_launcher.png)
 # FingerprintPay
-让微信、支付宝、淘宝和腾讯QQ在支持指纹识别的手机上使用指纹支付, 即使他们都不打算支持!
+让微信、支付宝、淘宝、腾讯QQ、云闪付在支持指纹识别的手机上使用指纹支付.
 
-## 注意: 支付宝现在支持了刷脸支付, 体验感官跟苹果的Face ID差不多, 请优先使用支付宝自带的刷脸支付
+## 注意: 支付宝支持刷脸支付, 体验感官跟苹果的Face ID差不多, 请优先使用支付宝自带的刷脸支付
 
 ## 最低要求
 * 有指纹硬件
@@ -23,19 +23,21 @@
 3. 下载插件: [riru-module-xfingerprint-pay-alipay-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
 4. 下载插件: [riru-module-xfingerprint-pay-wechat-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
 5. 下载插件: [riru-module-xfingerprint-pay-taobao-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
-6. 进入 Magisk Manager, 模块, 安装这五个模块, 不要重启
-7. 勾选启用五个模块, 重启手机
-8. Enjoy
+6. 下载插件: [riru-module-xfingerprint-pay-unionpay-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
+7. 进入 Magisk Manager, 模块, 安装这六个模块, 不要重启
+8. 勾选启用五个模块, 重启手机
+9. Enjoy
 
 ## 使用步骤 Zygisk
 1. 确认 Magisk Manager 应用设置中启用 Zygisk功能
 2. 下载插件: [zygisk-module-xfingerprint-pay-qq-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
 3. 下载插件: [zygisk-module-xfingerprint-pay-alipay-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
 4. 下载插件: [zygisk-module-xfingerprint-pay-wechat-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
-5. 下载插件: [zygisk-riru-module-xfingerprint-pay-taobao-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
-6. 进入 Magisk Manager, 模块, 安装这五个模块, 不要重启
-7. 勾选启用五个模块, 重启手机
-8. Enjoy
+5. 下载插件: [zygisk-module-xfingerprint-pay-taobao-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
+6. 下载插件: [zygisk-module-xfingerprint-pay-unionpay-release.zip](https://github.com/eritpchy/FingerprintPay/releases)
+7. 进入 Magisk Manager, 模块, 安装这六个模块, 不要重启
+8. 勾选启用五个模块, 重启手机
+9. Enjoy
 
 ## 使用步骤 Xposed
 1. 下载并安装插件: [xposed.com.surcumference.fingerprintpay.release.apk](https://github.com/eritpchy/FingerprintPay/releases/latest)
@@ -48,6 +50,7 @@
 2. [淘宝](https://github.com/eritpchy/FingerprintPay/tree/main/doc/Taobao)
 3. [微信](https://github.com/eritpchy/FingerprintPay/tree/main/doc/WeChat)
 4. [QQ](https://github.com/eritpchy/FingerprintPay/tree/main/doc/QQ)
+5. [云闪付](https://github.com/eritpchy/FingerprintPay/tree/main/doc/UnionPay)
 
 ## 常见问题
 1. 因Xposed 造成的开机卡住, 可按电源键禁用Xposed (多次振动后重启手机)
@@ -67,7 +70,7 @@
 
 ## 提示
 1. 本软件的网络功能仅限检查自己软件更新功能, 如不放心, 欢迎REVIEW代码.
-2. 支付宝、淘宝、微信和QQ均可沿用市场中的最新版.
+2. 支付宝、淘宝、微信、QQ、云闪付均可沿用市场中的最新版.
 
-![qq](https://github.com/eritpchy/FingerprintPay/raw/main/doc/qqGroup.png)
+![qq](./doc/qqGroup.png)
 #### QQ交流群: [665167891](http://shang.qq.com/wpa/qunwpa?idkey=91c2cd8f14532413701607c364f03f43afa1539a24b96b8907c92f3c018894e5)

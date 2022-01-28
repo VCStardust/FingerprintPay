@@ -40,6 +40,8 @@ public class Lang {
                 return tr("淘宝指纹", "淘宝指纹", "Taobao fingerprint pay");
             case R.id.settings_title_help_qq:
                 return tr("QQ指纹", "QQ指纹", "QQ fingerprint pay");
+            case R.id.settings_title_help_unionpay:
+                return tr("云闪付指纹", "雲閃付指纹", "UnionPay fingerprint pay");
             case R.id.settings_title_qq_group:
                 return tr("QQ交流群", "QQ交流群", "QQ Group");
             case R.id.settings_title_help_faq:
@@ -60,6 +62,8 @@ public class Lang {
                 return tr("查看使用教程", "查看使用教程", "Tutorial");
             case R.id.settings_sub_title_help_qq:
                 return tr("查看使用教程", "查看使用教程", "Tutorial");
+            case R.id.settings_sub_title_help_unionpay:
+                return tr("查看使用教程", "查看使用教程", "Tutorial");
             case R.id.settings_sub_title_qq_group:
                 return tr("665167891", "665167891", "665167891");
             case R.id.settings_sub_title_help_faq:
@@ -77,7 +81,9 @@ public class Lang {
             case R.id.cancel:
                 return tr("取消", "取消", "Cancel");
             case R.id.goto_update_page:
-                return tr("前往更新页", "前往更新頁 ", "Go");
+                return tr("前往更新页", "前往更新頁 ", "Update page");
+            case R.id.goto_update_page_mirror:
+                return tr("(国内镜像)", "(國內鏡像) ", "(Mirror)");
             case R.id.update_now:
                 return tr("立即更新", "立即更新 ", "UPDATE");
             case R.id.update_success_note:
@@ -95,6 +101,8 @@ public class Lang {
                 return tr("微信", "微信", "WeChat");
             case R.id.settings_title_qq:
                 return tr("腾讯QQ", "騰訊QQ", "Tencent QQ");
+            case R.id.settings_title_unionpay:
+                return tr("云闪付", "雲閃付", "Union Pay");
             case R.id.enter_password:
                 return tr("使用密码", "使用密碼", "Enter password");
             case R.id.settings_title_switch:
@@ -109,12 +117,16 @@ public class Lang {
                 return tr("启用微信指纹支付", "啟用微信指紋支付", "Enable fingerprint payment for WeChat");
             case R.id.settings_sub_title_switch_qq:
                 return tr("启用QQ指纹支付", "啟用QQ指紋支付", "Enable fingerprint payment for QQ");
+            case R.id.settings_sub_title_switch_unionpay:
+                return tr("启用云闪付指纹支付", "啟用雲閃付指紋支付", "Enable fingerprint payment for Union Pay");
             case R.id.settings_sub_title_password_alipay:
                 return tr("请输入支付宝的支付密码, 密码会加密后保存, 请放心", "請輸入支付宝的支付密碼, 密碼會加密后保存, 請放心", "Please enter your Payment password");
             case R.id.settings_sub_title_password_wechat:
                 return tr("请输入微信的支付密码, 密码会加密后保存, 请放心", "請輸入微信的支付密碼, 密碼會加密后保存, 請放心", "Please enter your Payment password");
             case R.id.settings_sub_title_password_qq:
                 return tr("请输入QQ的支付密码, 密码会加密后保存, 请放心", "請輸入QQ的支付密碼, 密碼會加密后保存, 請放心", "Please enter your Payment password");
+            case R.id.settings_sub_title_password_unionpay:
+                return tr("请输入云闪付的支付密码, 密码会加密后保存, 请放心", "請輸入雲閃付的支付密碼, 密碼會加密后保存, 請放心", "Please enter your Payment password");
             case R.id.settings_sub_title_donate:
                 return tr("如果您觉得本软件好用, 欢迎赞助, 多少都是心意", "如果您覺得本軟件好用, 歡迎贊助, 多少都是心意", "Donate me, If you like this project");
             case R.id.settings_sub_title_update_modules_same_time:
@@ -184,6 +196,8 @@ public class Lang {
                 return tr("未设定支付密码，请前往設置->指紋設置中设定微信的支付密码", "未設定支付密碼，請前往設置 -> 指紋設置中設定微信的支付密碼", "Payment password not set, please goto Settings -> Fingerprint to enter you payment password");
             case R.id.toast_password_not_set_qq:
                 return tr("未设定支付密码，请前往設置->指紋設置中设定QQ的支付密码", "未設定支付密碼，請前往設置 -> 指紋設置中設定QQ的支付密碼", "Payment password not set, please goto Settings -> Fingerprint to enter you payment password");
+            case R.id.toast_password_not_set_generic:
+                return tr("未设定支付密码，请前往設置->指紋設置中设定支付密码", "未設定支付密碼，請前往設置 -> 指紋設置中設定支付密碼", "Payment password not set, please goto Settings -> Fingerprint to enter you payment password");
             case R.id.toast_password_auto_enter_fail:
                 return tr("Oops.. 输入失败了. 请手动输入密码", "Oops.. 輸入失敗了. 請手動輸入密碼", "Oops... auto input failure, switch to manual input");
             case R.id.toast_goto_donate_page_fail_alipay:

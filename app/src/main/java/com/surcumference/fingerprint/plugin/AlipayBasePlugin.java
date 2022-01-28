@@ -135,7 +135,7 @@ public class AlipayBasePlugin {
         mFingerprintIdentify = new FingerprintIdentify(context);
         mFingerprintIdentify.init();
         if (mFingerprintIdentify.isFingerprintEnable()) {
-            mFingerprintIdentify.startIdentify(3, new BaseFingerprint.IdentifyListener() {
+            mFingerprintIdentify.startIdentify(5, new BaseFingerprint.IdentifyListener() {
                 @Override
                 public void onSucceed() {
                     NotifyUtils.notifyFingerprint(context, Lang.getString(R.id.toast_fingerprint_match));
@@ -155,7 +155,7 @@ public class AlipayBasePlugin {
                 public void onFailed(boolean isDeviceLocked) {
                     // 错误次数达到上限或者API报错停止了验证，自动结束指纹识别
                     // isDeviceLocked 表示指纹硬件是否被暂时锁定
-                    L.d("多次尝试错误，请使用密码输入");
+                    L.d("多次尝试错误，请确认指纹 isDeviceLocked", isDeviceLocked);
                     NotifyUtils.notifyFingerprint(context, Lang.getString(R.id.toast_fingerprint_retry_ended));
                     AlertDialog dialog = mFingerPrintAlertDialog;
                     if (dialog != null) {
@@ -276,20 +276,18 @@ public class AlipayBasePlugin {
         itemHlinearLayout.setClickable(true);
         itemHlinearLayout.setOnClickListener(view -> new SettingsView(activity).showInDialog());
 
-        int defHPadding = DpUtils.dip2px(activity, 15);
-
         TextView itemNameText = new TextView(activity);
         StyleUtils.apply(itemNameText);
         itemNameText.setText(Lang.getString(R.id.app_settings_name));
         itemNameText.setGravity(Gravity.CENTER_VERTICAL);
-        itemNameText.setPadding(defHPadding, 0, 0, 0);
+        itemNameText.setPadding(DpUtils.dip2px(activity, 12), 0, 0, 0);
         itemNameText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, StyleUtils.TEXT_SIZE_BIG);
 
         TextView itemSummerText = new TextView(activity);
         StyleUtils.apply(itemSummerText);
         itemSummerText.setText(BuildConfig.VERSION_NAME);
         itemSummerText.setGravity(Gravity.CENTER_VERTICAL);
-        itemSummerText.setPadding(0, 0, defHPadding, 0);
+        itemSummerText.setPadding(0, 0, DpUtils.dip2px(activity, 18), 0);
         itemSummerText.setTextColor(0xFF999999);
 
         //try use Alipay style
@@ -537,5 +535,6 @@ public class AlipayBasePlugin {
         if (dialog != null) {
             dialog.dismiss();
         }
+        mFingerPrintAlertDialog = null;
     }
 }

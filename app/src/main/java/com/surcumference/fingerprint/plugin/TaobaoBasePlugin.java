@@ -156,7 +156,7 @@ public class TaobaoBasePlugin {
         mFingerprintIdentify = new FingerprintIdentify(context);
         mFingerprintIdentify.init();
         if (mFingerprintIdentify.isFingerprintEnable()) {
-            mFingerprintIdentify.startIdentify(3, new BaseFingerprint.IdentifyListener() {
+            mFingerprintIdentify.startIdentify(5, new BaseFingerprint.IdentifyListener() {
                 @Override
                 public void onSucceed() {
                     // 验证成功，自动结束指纹识别
@@ -176,7 +176,7 @@ public class TaobaoBasePlugin {
                 public void onFailed(boolean isDeviceLocked) {
                     // 错误次数达到上限或者API报错停止了验证，自动结束指纹识别
                     // isDeviceLocked 表示指纹硬件是否被暂时锁定
-                    L.d("多次尝试错误，请使用密码输入");
+                    L.d("多次尝试错误，请确认指纹 isDeviceLocked", isDeviceLocked);
                     NotifyUtils.notifyFingerprint(context, Lang.getString(R.id.toast_fingerprint_retry_ended));
                     AlertDialog dialog = mFingerPrintAlertDialog;
                     if (dialog != null) {

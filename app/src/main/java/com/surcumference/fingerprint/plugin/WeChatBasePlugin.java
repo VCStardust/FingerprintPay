@@ -72,7 +72,7 @@ public class WeChatBasePlugin {
         mFingerprintIdentify = new FingerprintIdentify(context.getApplicationContext());
         mFingerprintIdentify.init();
         if (mFingerprintIdentify.isFingerprintEnable()) {
-            mFingerprintIdentify.startIdentify(3, new BaseFingerprint.IdentifyListener() {
+            mFingerprintIdentify.startIdentify(5, new BaseFingerprint.IdentifyListener() {
                 @Override
                 public void onSucceed() {
                     // 验证成功，自动结束指纹识别
@@ -94,7 +94,7 @@ public class WeChatBasePlugin {
                 public void onFailed(boolean isDeviceLocked) {
                     // 错误次数达到上限或者API报错停止了验证，自动结束指纹识别
                     // isDeviceLocked 表示指纹硬件是否被暂时锁定
-                    L.d("多次尝试错误，请确认指纹");
+                    L.d("多次尝试错误，请确认指纹 isDeviceLocked", isDeviceLocked);
                     NotifyUtils.notifyFingerprint(context, Lang.getString(R.id.toast_fingerprint_retry_ended));
                     mMockCurrentUser = false;
                 }
@@ -153,7 +153,8 @@ public class WeChatBasePlugin {
         } else if (activityClzName.contains(".WalletPayUI")
                 || activityClzName.contains(".UIPageFragmentActivity")) {
             stopAndRemoveCurrentActivityViewObserver();
-            ActivityViewObserver activityViewObserver = new ActivityViewObserver(activity, ".EditHintPasswdView");
+            ActivityViewObserver activityViewObserver = new ActivityViewObserver(activity);
+            activityViewObserver.setViewIdentifyType(".EditHintPasswdView");
             activityViewObserver.start(100, new ActivityViewObserver.IActivityViewListener() {
                 @Override
                 public void onViewFounded(ActivityViewObserver observer, View view) {
@@ -193,7 +194,8 @@ public class WeChatBasePlugin {
         try {
             L.d("Activity onPause =", activity);
             final String activityClzName = activity.getClass().getName();
-            if (activityClzName.contains(".WalletPayUI")) {
+            if (activityClzName.contains(".WalletPayUI")
+                || activityClzName.contains(".UIPageFragmentActivity")) {
                 stopAndRemoveCurrentActivityViewObserver();
                 onPayDialogDismiss(activity);
             }

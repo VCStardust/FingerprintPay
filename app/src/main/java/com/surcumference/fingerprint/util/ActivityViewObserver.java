@@ -1,8 +1,11 @@
 package com.surcumference.fingerprint.util;
 
 import android.app.Activity;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 
 import com.surcumference.fingerprint.util.log.L;
 
@@ -14,14 +17,25 @@ public class ActivityViewObserver {
 
     private WeakReference<Activity> mActivityRef;
     private boolean mRunning = false;
-    private String mViewIdentifier;
+    private String mViewIdentifyType;
+    private String mViewIdentifyText;
 
-    public ActivityViewObserver(Activity weakRefActivity, String viewIdentifier) {
+    public ActivityViewObserver(Activity weakRefActivity) {
         this.mActivityRef = new WeakReference<>(weakRefActivity);
-        this.mViewIdentifier = viewIdentifier;
+    }
+
+    public void setViewIdentifyType(String viewIdentifyType) {
+        this.mViewIdentifyType = viewIdentifyType;
+    }
+
+    public void setViewIdentifyText(String viewIdentifyText) {
+        this.mViewIdentifyText = viewIdentifyText;
     }
 
     public void start(long loopMSec, IActivityViewListener listener) {
+        if (TextUtils.isEmpty(this.mViewIdentifyType) && TextUtils.isEmpty(this.mViewIdentifyText)) {
+            throw new IllegalArgumentException("Error: ViewIdentifyType or ViewIdentifyText not set");
+        }
         if (mRunning) {
             return;
         }
@@ -31,6 +45,11 @@ public class ActivityViewObserver {
 
     public void stop() {
         mRunning = false;
+    }
+
+    @Nullable
+    public Activity getTargetActivity() {
+        return mActivityRef.get();
     }
 
     private void task(long loopMSec, IActivityViewListener listener) {
@@ -58,9 +77,19 @@ public class ActivityViewObserver {
             } else {
                 continue;
             }
-            ViewUtils.getChildViewsByType((ViewGroup) decorView, this.mViewIdentifier, viewList);
-            if (viewList.size() > 0) {
-                break;
+            String viewIdentifyType = this.mViewIdentifyType;
+            if (!TextUtils.isEmpty(viewIdentifyType)) {
+                ViewUtils.getChildViewsByType((ViewGroup) decorView, viewIdentifyType, viewList);
+                if (viewList.size() > 0) {
+                    break;
+                }
+            }
+            String viewIdentifyText = this.mViewIdentifyText;
+            if (!TextUtils.isEmpty(viewIdentifyText)) {
+                ViewUtils.getChildViews((ViewGroup) decorView, viewIdentifyText, viewList);
+                if (viewList.size() > 0) {
+                    break;
+                }
             }
         }
         if (viewList.size() > 0) {

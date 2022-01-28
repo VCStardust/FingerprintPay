@@ -330,7 +330,7 @@ public class QQBasePlugin {
         fingerprintIdentify.init();
         if (fingerprintIdentify.isFingerprintEnable()) {
             mFingerprintScanStateReady = true;
-            fingerprintIdentify.startIdentify(3, new BaseFingerprint.IdentifyListener() {
+            fingerprintIdentify.startIdentify(5, new BaseFingerprint.IdentifyListener() {
                 @Override
                 public void onSucceed() {
                     // 验证成功，自动结束指纹识别
@@ -355,7 +355,7 @@ public class QQBasePlugin {
                     if (mFingerprintScanStateReady) {
                         NotifyUtils.notifyFingerprint(context, Lang.getString(R.id.toast_fingerprint_retry_ended));
                     }
-                    L.d("多次尝试错误，请使用密码输入");
+                    L.d("多次尝试错误，请确认指纹 isDeviceLocked", isDeviceLocked);
                     onFailureUnlockCallback.run();
                     mMockCurrentUser = false;
                 }

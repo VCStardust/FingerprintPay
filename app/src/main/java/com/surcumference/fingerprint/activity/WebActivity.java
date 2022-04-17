@@ -19,6 +19,9 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.surcumference.fingerprint.util.DpUtils;
 import com.surcumference.fingerprint.util.Task;
 import com.surcumference.fingerprint.util.Umeng;

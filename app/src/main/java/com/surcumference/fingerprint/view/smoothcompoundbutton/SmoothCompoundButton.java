@@ -19,6 +19,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Checkable;
 
+import androidx.core.view.MotionEventCompat;
+import androidx.core.view.ViewCompat;
+
 public abstract class SmoothCompoundButton extends Button implements Checkable {
 
 	final String TAG = "SmoothCompoundButton";

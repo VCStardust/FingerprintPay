@@ -133,13 +133,12 @@ public class AlipayBasePlugin {
 
     public void initFingerPrintLock(final Context context, final Runnable onSuccessUnlockCallback) {
         mFingerprintIdentify = new FingerprintIdentify(context);
+        mFingerprintIdentify.setSupportAndroidL(true);
         mFingerprintIdentify.init();
         if (mFingerprintIdentify.isFingerprintEnable()) {
             mFingerprintIdentify.startIdentify(5, new BaseFingerprint.IdentifyListener() {
                 @Override
                 public void onSucceed() {
-                    NotifyUtils.notifyFingerprint(context, Lang.getString(R.id.toast_fingerprint_match));
-                    // 验证成功，自动结束指纹识别
                     L.d("指纹识别成功");
                     onSuccessUnlockCallback.run();
                 }

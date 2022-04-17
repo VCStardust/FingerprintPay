@@ -6,6 +6,8 @@ import android.provider.Settings;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
+import androidx.annotation.Nullable;
+
 import com.surcumference.fingerprint.BuildConfig;
 import com.surcumference.fingerprint.util.log.L;
 

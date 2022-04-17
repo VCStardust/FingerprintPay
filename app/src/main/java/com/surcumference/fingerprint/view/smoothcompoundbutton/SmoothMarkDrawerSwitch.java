@@ -20,6 +20,8 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import androidx.core.view.MotionEventCompat;
+
 public class SmoothMarkDrawerSwitch extends SmoothMarkDrawer {
 
 //	private static final int DEFAULT_COLOR_THUMB_OFF = 0xffececec;

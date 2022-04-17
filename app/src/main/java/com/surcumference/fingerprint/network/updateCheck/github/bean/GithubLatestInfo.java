@@ -3,6 +3,8 @@ package com.surcumference.fingerprint.network.updateCheck.github.bean;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.surcumference.fingerprint.bean.PluginType;

@@ -8,6 +8,8 @@ import android.os.UserHandle;
 import androidx.annotation.Keep;
 import android.text.TextUtils;
 
+import androidx.annotation.Keep;
+
 import com.surcumference.fingerprint.BuildConfig;
 import com.surcumference.fingerprint.bean.PluginTarget;
 import com.surcumference.fingerprint.bean.PluginType;

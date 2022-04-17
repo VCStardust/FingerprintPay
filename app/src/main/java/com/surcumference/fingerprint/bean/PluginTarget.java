@@ -1,6 +1,6 @@
 package com.surcumference.fingerprint.bean;
 
-import androidx.annotation.IdRes;;
+import androidx.annotation.IdRes;
 
 import com.surcumference.fingerprint.Lang;
 import com.surcumference.fingerprint.R;

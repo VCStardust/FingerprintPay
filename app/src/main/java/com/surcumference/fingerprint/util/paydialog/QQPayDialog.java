@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.surcumference.fingerprint.util.ViewUtils;
 import com.surcumference.fingerprint.util.log.L;
 

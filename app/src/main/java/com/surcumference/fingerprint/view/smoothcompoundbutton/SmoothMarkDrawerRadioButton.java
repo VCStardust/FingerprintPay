@@ -12,6 +12,8 @@ import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
 import android.view.View;
 import android.view.animation.Interpolator;
 
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+
 public class SmoothMarkDrawerRadioButton extends SmoothMarkDrawer {
 
 	private PorterDuffXfermode xfermode = new PorterDuffXfermode(PorterDuff.Mode.DST_OUT);// XOR);

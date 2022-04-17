@@ -7,6 +7,8 @@ import android.os.Environment;
 import androidx.core.content.FileProvider;
 import android.text.TextUtils;
 
+import androidx.core.content.FileProvider;
+
 import com.surcumference.fingerprint.BuildConfig;
 import com.surcumference.fingerprint.Constant;
 import com.surcumference.fingerprint.util.log.L;

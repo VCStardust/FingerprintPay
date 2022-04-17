@@ -39,6 +39,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.ButtonBarLayout;
+import androidx.appcompat.widget.SwitchCompat;
+
 import com.surcumference.fingerprint.util.log.L;
 
 import java.lang.reflect.Field;

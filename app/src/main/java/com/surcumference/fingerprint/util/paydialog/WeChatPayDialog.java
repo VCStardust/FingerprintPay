@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.surcumference.fingerprint.Constant;
 import com.surcumference.fingerprint.util.Tools;
 import com.surcumference.fingerprint.util.log.L;
 
@@ -24,7 +25,7 @@ public class WeChatPayDialog {
         public TextView titleTextView;
 
         @Nullable
-        public static WeChatPayDialog findFrom(ViewGroup rootView) {
+        public static WeChatPayDialog findFrom(int versionCode, ViewGroup rootView) {
             try {
                 WeChatPayDialog payDialog = new WeChatPayDialog();
 
@@ -41,6 +42,10 @@ public class WeChatPayDialog {
                         }
                     } else if (view.getClass().getName().endsWith(".TenpaySecureEditText")) {
                         L.d("密码输入框:" + view);
+                        if (versionCode >= Constant.WeChat.WECHAT_VERSION_CODE_8_0_30)
+                        if (view.getTag() != null) {
+                            continue;
+                        }
                         if (view instanceof EditText) {
                             payDialog.inputEditText = (EditText)view;
                         }

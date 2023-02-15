@@ -59,9 +59,6 @@ public class WeChatBasePlugin {
     protected FingerprintIdentify mFingerprintIdentify;
     private FragmentObserver mFragmentObserver;
 
-    private static final int WECHAT_VERSION_CODE_8_0_18 = 2060;
-    private static final int WECHAT_VERSION_CODE_8_0_20 = 2100;
-
     private int mWeChatVersionCode = 0;
 
     private int getWeChatVersionCode(Context context) {
@@ -160,7 +157,7 @@ public class WeChatBasePlugin {
                 || activityClzName.contains("com.tencent.mm.plugin.wallet.pwd.ui.WalletPasswordSettingUI")
                 || activityClzName.contains("com.tencent.mm.ui.vas.VASCommonActivity") /** 8.0.18 */) {
             Task.onMain(100, () -> doSettingsMenuInject(activity));
-        } else if (getWeChatVersionCode(activity) >= WECHAT_VERSION_CODE_8_0_20 && activityClzName.contains("com.tencent.mm.ui.LauncherUI")) {
+        } else if (getWeChatVersionCode(activity) >= Constant.WeChat.WECHAT_VERSION_CODE_8_0_20 && activityClzName.contains("com.tencent.mm.ui.LauncherUI")) {
             startFragmentObserver(activity);
         } else if (activityClzName.contains(".WalletPayUI")
                 || activityClzName.contains(".UIPageFragmentActivity")) {
@@ -210,7 +207,7 @@ public class WeChatBasePlugin {
                 || activityClzName.contains(".UIPageFragmentActivity")) {
                 stopAndRemoveCurrentActivityViewObserver();
                 onPayDialogDismiss(activity);
-            } else if (getWeChatVersionCode(activity) >= WECHAT_VERSION_CODE_8_0_20 && activityClzName.contains("com.tencent.mm.ui.LauncherUI")) {
+            } else if (getWeChatVersionCode(activity) >= Constant.WeChat.WECHAT_VERSION_CODE_8_0_20 && activityClzName.contains("com.tencent.mm.ui.LauncherUI")) {
                 stopFragmentObserver(activity);
             }
         } catch (Exception e) {
@@ -238,7 +235,8 @@ public class WeChatBasePlugin {
         L.d("PayDialog show");
         Context context = rootView.getContext();
         if (Config.from(context).isOn()) {
-            WeChatPayDialog payDialogView = WeChatPayDialog.findFrom(rootView);
+            int versionCode = getWeChatVersionCode(context);
+            WeChatPayDialog payDialogView = WeChatPayDialog.findFrom(versionCode, rootView);
             L.d(payDialogView);
             if (payDialogView == null) {
                 NotifyUtils.notifyVersionUnSupport(context, Constant.PACKAGE_NAME_WECHAT);
@@ -256,8 +254,9 @@ public class WeChatBasePlugin {
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
             fingerPrintLayout.setLayoutParams(layoutParams);
-            ImageView fingerprintImageView = new ImageView(context);
 
+            fingerPrintLayout.setClipChildren(false);
+            ImageView fingerprintImageView = new ImageView(context);
             try {
                 final Bitmap bitmap = ImageUtils.base64ToBitmap(Constant.ICON_FINGER_PRINT_WECHAT_BASE64);
                 fingerprintImageView.setImageBitmap(bitmap);
@@ -281,8 +280,11 @@ public class WeChatBasePlugin {
             } catch (OutOfMemoryError e) {
                 L.d(e);
             }
-            fingerPrintLayout.addView(fingerprintImageView);
-
+            fingerprintImageView.setScaleY(4F);
+            fingerprintImageView.setScaleX(4F);
+            RelativeLayout.LayoutParams fingerprintImageViewLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            fingerprintImageViewLayoutParams.topMargin = DpUtils.dip2px(context, 24);
+            fingerPrintLayout.addView(fingerprintImageView, fingerprintImageViewLayoutParams);
 
             final Runnable switchToFingerprintRunnable = ()-> {
                 mInputEditText.setVisibility(View.GONE);
@@ -292,6 +294,9 @@ public class WeChatBasePlugin {
                     passwordLayout.removeView(fingerPrintLayoutLast);
                 }
                 passwordLayout.addView(fingerPrintLayout);
+                passwordLayout.setClipChildren(false);
+                ((ViewGroup)passwordLayout.getParent()).setClipChildren(false);
+                ((ViewGroup)passwordLayout.getParent().getParent()).setClipChildren(false);
 
                 initFingerPrintLock(context, ()-> {
                     BlackListUtils.applyIfNeeded(context);
@@ -302,7 +307,7 @@ public class WeChatBasePlugin {
                         Toast.makeText(context, Lang.getString(R.id.toast_password_not_set_wechat), Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (getWeChatVersionCode(context) >= WECHAT_VERSION_CODE_8_0_18) {
+                    if (getWeChatVersionCode(context) >= Constant.WeChat.WECHAT_VERSION_CODE_8_0_18) {
                         mInputEditText.getText().clear();
                         for (char c : pwd.toCharArray()) {
                             mInputEditText.append(String.valueOf(c));
@@ -387,7 +392,7 @@ public class WeChatBasePlugin {
                 || isHeaderViewExistsFallback(itemView)) {
             return;
         }
-        if (versionCode >= WECHAT_VERSION_CODE_8_0_18) {
+        if (versionCode >= Constant.WeChat.WECHAT_VERSION_CODE_8_0_18) {
             //整个设置界面的class 都是 com.tencent.mm.ui.vas.VASCommonActivity...
             if (targetClassName.contains("com.tencent.mm.ui.vas.VASCommonActivity")
                 || targetClassName.contains("com.tencent.mm.ui.vas.VASCommonFragment") /** 8.0.20 */) {
@@ -403,7 +408,7 @@ public class WeChatBasePlugin {
         LinearLayout settingsItemRootLLayout = new LinearLayout(context);
         settingsItemRootLLayout.setOrientation(LinearLayout.VERTICAL);
         settingsItemRootLLayout.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        if (versionCode >= WECHAT_VERSION_CODE_8_0_20) {
+        if (versionCode >= Constant.WeChat.WECHAT_VERSION_CODE_8_0_20) {
             // 减少页面跳动
             settingsItemRootLLayout.setPadding(0, 0, 0, 0);
         } else {
